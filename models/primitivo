@@ -1,0 +1,8 @@
+
+    /** 
+     * The $nomeAttributo$.
+     * <p>
+     * $descrizione$
+     * </p>
+     */
+    private $TipoAttributo$ $nomeAttributo$;

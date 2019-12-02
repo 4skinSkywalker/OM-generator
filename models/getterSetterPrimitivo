@@ -1,0 +1,16 @@
+    
+    /**
+     * Gets the $nomeAttributo$.
+     * @return the $nomeAttributo$
+     */
+    public $TipoAttributo$ get$NomeAttributo$() {
+        return $nomeAttributo$;
+    }
+
+    /**
+     * Sets the $nomeAttributo$.
+     * @param $nomeAttributo$ the new $nomeAttributo$
+     */
+    public void set$NomeAttributo$($TipoAttributo$ $nomeAttributo$) {
+        this.$nomeAttributo$ = $nomeAttributo$;
+    }

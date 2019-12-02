@@ -1,0 +1,15 @@
+package it.ifis.multichannel.atomicservice.$nomedominio$.$nomeservizio$.om;
+
+$imports$
+
+/**
+ * The Class $NomeClasse$$TipoOm$.
+ * <p>
+ * $descrizione$
+ * <p>
+ * @author $autore$
+ */
+public class $NomeClasse$$TipoOm$ {
+   $attributi$
+   $gettersSetters$
+}

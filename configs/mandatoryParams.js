@@ -1,0 +1,1 @@
+module.exports = ['autore', 'descrizione', 'dominio', 'servizio', 'file']
