@@ -22,7 +22,7 @@ function writeOm(args, datiInput, datiOutput) {
     var INPUT = '_____in_____'
     var OUTPUT = '_____out_____'
 
-    function buildTree(dati, NomePadre) {
+    function buildTree(dati, Classe) {
 
         for (var dato of dati) {
 
@@ -30,17 +30,16 @@ function writeOm(args, datiInput, datiOutput) {
                 continue
             }
 
-            var informazioniTipo = getTypeDetails[dato.complessita]
-            var TipoAttributo = checkAndReturnType(dato.formato, informazioniTipo.primitivo)
-            
             var attributo = {
-                nome: stringToCamelCaseNotation(dato.json),
+                nome: dato.json,
                 descrizione: dato.descrizione,
-                tipo: TipoAttributo,
-                dettagli: getTypeDetails[dato.complessita]
+                formato: dato.formato,
+                complessita: dato.complessita
             }
 
-            var locazione = NomePadre // inizialmente 'Root'
+            var dettagli = getTypeDetails[dato.complessita]
+
+            var locazione = Classe // inizialmente 'Root'
             if (classi[locazione]) {
 
                 var trovato = classi[locazione].find(x => x.nome === attributo.nome)
@@ -53,7 +52,9 @@ function writeOm(args, datiInput, datiOutput) {
 
             dato.visto = true
 
-            if (!informazioniTipo.primitivo) {
+            if (!dettagli.primitivo) {
+
+                var TipoAttributo = checkAndReturnType(dato.formato, dettagli.primitivo)
 
                 var figli = getChildren(dato, dati)
                 buildTree(figli, TipoAttributo)
@@ -97,28 +98,36 @@ function writeOm(args, datiInput, datiOutput) {
         var imports = []
 
         for (var attributo of classi[Classe]) {
-            
-            var nomeAttributo = attributo.nome
-            var NomeAttributo = stringToPascalNotation(attributo.nome)
-            var TipoAttributo = attributo.tipo
 
-            var template = fs.readFileSync(attributo.dettagli.template.campo, 'utf8')
+            var dettagli = getTypeDetails[attributo.complessita]
+            
+            var nomeAttributo = stringToCamelCaseNotation(attributo.nome)
+            var NomeAttributo = stringToPascalNotation(attributo.nome)
+            var TipoAttributo = checkAndReturnType(attributo.formato, dettagli.primitivo)
+
+            var template = fs.readFileSync(dettagli.template.campo, 'utf8')
             template = template.replace(/\$nomeAttributo\$/g, nomeAttributo)
             template = template.replace(/\$TipoAttributo\$/g, TipoAttributo)
             template = template.replace(/\$descrizione\$/g, indentDescription(attributo.descrizione))
 
             attributi += template
 
-            template = fs.readFileSync(attributo.dettagli.template.getterSetter, 'utf8')
+            template = fs.readFileSync(dettagli.template.getterSetter, 'utf8')
             template = template.replace(/\$NomeAttributo\$/g, NomeAttributo)
             template = template.replace(/\$nomeAttributo\$/g, nomeAttributo)
             template = template.replace(/\$TipoAttributo\$/g, TipoAttributo)
 
             gettersSetters += template
 
-            if ('import' in attributo.dettagli
-             && imports.indexOf(attributo.dettagli.import) < 0) {
-                imports.push(attributo.dettagli.import)
+            if ('import' in dettagli) {
+
+                var stringaDiImport = (typeof dettagli.import === "function")
+                    ? dettagli.import(attributo.formato)
+                    : dettagli.import
+
+                if (stringaDiImport && imports.indexOf(stringaDiImport) < 0) {
+                    imports.push(stringaDiImport)
+                }
             }
         }
 

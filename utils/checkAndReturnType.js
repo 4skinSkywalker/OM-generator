@@ -1,29 +1,18 @@
 var stringToPascalNotation = require('./stringToPascalNotation')
+var removeParenthesis = require('./removeParenthesis')
+var typesMap = require('../configs/typesMap')
 
 module.exports = function(string, isPrimitive) {
 
-    var map = {
-        short: 'String',
-        string: 'String',
-        long: 'Long',
-        int: 'Integer',
-        timestamp: 'Date',
-        decimal: 'BigDecimal'
-    }
-
-    var index = string.indexOf('(')
-
-    if (index > -1) {
-        string = string.slice(0, index).toLowerCase()
-    }
+    string = removeParenthesis(string)
 
     if (!isPrimitive) {
         return stringToPascalNotation(string)
     }
 
-    if (!map[string]) {
+    if (!typesMap[string]) {
         throw new Error(`${string} non è un tipo valido.`)
     }
 
-    return map[string]
+    return typesMap[string].nome
 }

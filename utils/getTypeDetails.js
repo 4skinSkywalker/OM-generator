@@ -1,4 +1,6 @@
-var modelsFolder = 'models/'
+var typesMap = require('../configs/typesMap')
+var removeParenthesis = require('./removeParenthesis')
+var modelsFolder = require('../configs/modelsPath')
 
 module.exports = {
     c: {
@@ -26,6 +28,7 @@ module.exports = {
             campo: `${modelsFolder}primitivo`,
             getterSetter: `${modelsFolder}getterSetterPrimitivo`
         },
+        import: string => typesMap[ removeParenthesis(string) ].import,
         primitivo: true
     }
 }
