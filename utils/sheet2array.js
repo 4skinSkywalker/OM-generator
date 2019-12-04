@@ -17,8 +17,14 @@ module.exports = function(sheet){
         result.push(row)
     }
 
+    var startPoint = result.findIndex(row => row[0] === 'ROOT')
+
+    if (!startPoint) {
+        throw new Error(`Definire la radice del servizio con la parola "ROOT"`)
+    }
+
     return result
-        .slice(2)
+        .slice(startPoint + 1)
         .map(row => row.map(cell => cell && cell.trim()))
         .filter(row => !row.every(cell => !cell))
 }

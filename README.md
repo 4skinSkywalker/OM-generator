@@ -2,8 +2,8 @@
 Un generatore di OM boilerplate a partire da un documento di "analisi"
 
 Modalità d'uso:
-1. Installare Node.js
-2. Clonare il repositorio in locale
-3. Nella directory lanciare il comando `npm install`
-4. Copiare "Starter_Template_Service.xlsx" e inserire i dati
-5. Nella direcotry lanciare il comando `node gen-serv -autore [autore] -descrizione [descrizione] -dominio [dominio] -servizio [servizio] -file [file]`
+1. Installa Node.js
+2. Clona il repositorio in locale
+3. Lancia il comando `npm install`
+4. Copia "Starter_Template.xlsx" e inserisci i dati
+5. Lancia il comando `node gen-serv -autore [autore] -descrizione [descrizione] -dominio [dominio] -servizio [servizio] -file [file]`
