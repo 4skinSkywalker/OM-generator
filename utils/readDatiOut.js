@@ -19,7 +19,7 @@ module.exports = function(file) {
             }
 
             if (
-                (!xml || !json || !complessita || !livello || !formato)
+                (!json || !complessita || !livello || !formato)
             ) {
                 throw new Error(`Dati obbligatori mancanti secondo foglio Excel alla riga ${posizioneExcel}`)
             }
@@ -28,7 +28,24 @@ module.exports = function(file) {
                 throw new Error(`Nome variabile "${json}" secondo foglio Excel invalido alla riga ${posizioneExcel}`)
             }
 
-            return { xml, json, complessita, livello, formato, descrizione }
+            descrizione = descrizione && descrizione
+                .split('\n')
+                .map((w, i) => {
+                    if (i === 0) {
+                        return '<p>\n *  ' + w
+                    }
+                    return ' *  ' + w
+                })
+                .join('\n') + '\n * </p>'
+
+            return {
+                xml,
+                json,
+                complessita,
+                livello,
+                formato,
+                descrizione: descrizione
+            }
         })
         .sort((a, b) => a.livello.localeCompare(b.livello))
 

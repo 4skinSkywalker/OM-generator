@@ -4,9 +4,7 @@ $imports$
 
 /**
  * The Class $NomeClasse$$TipoOm$.
- * <p>
  * $descrizione$
- * <p>
  * @author $autore$
  */
 public class $NomeClasse$$TipoOm$ {
