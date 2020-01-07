@@ -33,8 +33,6 @@ function semantic2array(string) {
 
 module.exports = function(dati) {
 
-    var isValid = true
-    var errorDetail = [null, null]
     for (var i = 1; i < dati.length; i++) {
         var prev = semantic2array(dati[i - 1].livello)
         var curr = semantic2array(dati[i].livello)
