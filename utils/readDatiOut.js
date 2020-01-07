@@ -58,7 +58,7 @@ module.exports = function(file) {
         })
         .sort((a, b) => a.livello.localeCompare(b.livello))
 
-    console.log(ordered)
+    // console.log(ordered)
 
     checkTreeCompleteness(ordered)
 
