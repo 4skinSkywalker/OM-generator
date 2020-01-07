@@ -26,6 +26,5 @@ var typesMap = {
 }
 
 typesMap.int = typesMap.integer
-typesMap.decimal = typesMap.bigdecimal
 
 module.exports = typesMap

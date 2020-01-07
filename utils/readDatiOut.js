@@ -38,16 +38,27 @@ module.exports = function(file) {
                 })
                 .join('\n') + '\n * </p>'
 
+            if (!/^([0-9]+\.)+[0-9]+$/.test(livello)) {
+                throw new Error(`Livello è invalido "${livello}" secondo foglio Excel invalido alla riga ${posizioneExcel}`)
+            }
+            
+            livello = livello
+                .split('.')
+                .map(n => n.padStart(3, 0))
+                .join('.')
+
             return {
                 xml,
                 json,
                 complessita,
                 livello,
-                formato,
+                formato: formato.toLowerCase(),
                 descrizione: descrizione
             }
         })
         .sort((a, b) => a.livello.localeCompare(b.livello))
+
+    console.log(ordered)
 
     checkTreeCompleteness(ordered)
 
