@@ -1,4 +1,6 @@
 # OM-generator
+
+## Getting started
 Un generatore di OM boilerplate a partire da un documento di "analisi"
 
 Modalità d'uso:
