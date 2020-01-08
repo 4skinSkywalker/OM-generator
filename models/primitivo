@@ -1,6 +1,3 @@
 
-    /** 
-     * The $nomeAttributo$.
-     * $descrizione$
-     */
+    /** $descrizione$ */
     private $TipoAttributo$ $nomeAttributo$;
