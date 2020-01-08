@@ -1,9 +1,9 @@
 # OM-generator
+Un generatore di OM boilerplate a partire da un documento Excel (standardizzato) di "analisi".
 
 ## Getting started
-Un generatore di OM boilerplate a partire da un documento di "analisi"
+Come cominciare in 5 passi:
 
-Modalità d'uso:
 1. Installa Node.js
 2. Clona il repositorio in locale
 3. Lancia il comando `npm install`
