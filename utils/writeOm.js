@@ -85,9 +85,9 @@ function writeOm(args, datiInput, datiOutput) {
             file = file.replace(/\$descrizione\$/g, indentDescription(args.descrizione))
             
             if (Classe === INPUT) {
-                file = file.replace(/\$TipoOm\$/g, 'Request')
+                file = file.replace(/\$TipoOm\$/g, 'RequestOm')
             } else {
-                file = file.replace(/\$TipoOm\$/g, 'Response')
+                file = file.replace(/\$TipoOm\$/g, 'ResponseOm')
             }
         } else {
             file = file.replace(/\$NomeClasse\$/g, Classe)
@@ -138,9 +138,9 @@ function writeOm(args, datiInput, datiOutput) {
         var saveDirectory = outputPath(nomeservizio, true)
     
         var path = (Classe === INPUT)
-            ? `${saveDirectory}/${NomeServizio}Request.java`
+            ? `${saveDirectory}/${NomeServizio}RequestOm.java`
             : (Classe === OUTPUT)
-                ? `${saveDirectory}/${NomeServizio}Response.java`
+                ? `${saveDirectory}/${NomeServizio}ResponseOm.java`
                 : `${saveDirectory}/${Classe}.java`
         
         fs.writeFileSync(path, file)

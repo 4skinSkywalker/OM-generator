@@ -32,11 +32,11 @@ module.exports = function(file) {
                 .split('\n')
                 .map((w, i) => {
                     if (i === 0) {
-                        return '<p>\n *  ' + w
+                        return '' + w
                     }
                     return ' *  ' + w
                 })
-                .join('\n') + '\n * </p>'
+                .join('\n')
             
             if (!/^([0-9]+\.)+[0-9]+$/.test(livello)) {
                 throw new Error(`Livello è invalido "${livello}" primo foglio Excel invalido alla riga ${posizioneExcel}`)
