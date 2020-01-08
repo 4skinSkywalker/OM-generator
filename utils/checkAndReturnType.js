@@ -6,13 +6,10 @@ module.exports = function(string, isPrimitive) {
 
     string = removeParenthesis(string)
 
-    if (!isPrimitive) {
-        return stringToPascalNotation(string)
-    }
+    if (!isPrimitive) return stringToPascalNotation(string)
 
-    if (!typesMap[string]) {
-        throw new Error(`${string} non è un tipo valido.`)
-    }
+    if (!typesMap[string]) throw new Error(`${string} non è un tipo valido.`)
 
     return typesMap[string].nome
+
 }

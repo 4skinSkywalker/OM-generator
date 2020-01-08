@@ -4,4 +4,5 @@ module.exports = function(nomeservizio, stringFlag) {
     return (stringFlag)
         ? dirs.join('/')
         : dirs
+
 }

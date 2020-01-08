@@ -1,8 +1,6 @@
 module.exports = function(string) {
 
-    if (!string) {
-        return ''
-    }
+    if (!string) return ''
 
     return string
         .split('\n')
@@ -13,4 +11,5 @@ module.exports = function(string) {
             return '\t' + line
         })
         .join('\n')
+
 }

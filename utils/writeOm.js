@@ -9,26 +9,25 @@ var getTypeDetails = require('./getTypeDetails')
 
 function writeOm(args, datiInput, datiOutput) {
 
-    if (!args) {
+    if (!args)
         throw new Error('Argomenti mancanti.')
-    }
 
-    if (!datiInput || (Array.isArray(datiInput) && !datiInput.length)
-     || !datiOutput || (Array.isArray(datiOutput) && !datiOutput.length)) {
+    if (!datiInput || (Array.isArray(datiInput) && !datiInput.length) || !datiOutput || (Array.isArray(datiOutput) && !datiOutput.length))
         throw new Error('Dati mancanti.')
-    }
 
     var classi = { }
     var INPUT = '_____in_____'
     var OUTPUT = '_____out_____'
 
+    var nomeservizio = stringToPascalNotation(args.servizio).toLowerCase()
+    var NomeServizio = stringToPascalNotation(args.servizio)
+    var nomedominio = stringToPascalNotation(args.dominio).toLowerCase()
+
     function buildTree(dati, Classe) {
 
         for (var dato of dati) {
 
-            if (dato.visto) {
-                continue
-            }
+            if (dato.visto) continue
 
             var attributo = {
                 nome: dato.json,
@@ -43,9 +42,7 @@ function writeOm(args, datiInput, datiOutput) {
             if (classi[locazione]) {
 
                 var trovato = classi[locazione].find(x => x.nome === attributo.nome)
-                if (!trovato) {
-                    classi[locazione].push(attributo)
-                }
+                if (!trovato) classi[locazione].push(attributo)
             } else {
                 classi[locazione] = [attributo]
             }
@@ -67,10 +64,6 @@ function writeOm(args, datiInput, datiOutput) {
 
     for (var Classe in classi) {
 
-        var nomeservizio = stringToPascalNotation(args.servizio).toLowerCase()
-        var NomeServizio = stringToPascalNotation(args.servizio)
-        var nomedominio = stringToPascalNotation(args.dominio).toLowerCase()
-
         var file = (Classe === INPUT || Classe === OUTPUT)
             ? fs.readFileSync('models/requestResponse', 'utf8')
             : fs.readFileSync('models/classe', 'utf8')
@@ -84,11 +77,9 @@ function writeOm(args, datiInput, datiOutput) {
             file = file.replace(/\$NomeClasse\$/g, NomeServizio)
             file = file.replace(/\$descrizione\$/g, indentDescription(args.descrizione))
             
-            if (Classe === INPUT) {
-                file = file.replace(/\$TipoOm\$/g, 'RequestOm')
-            } else {
-                file = file.replace(/\$TipoOm\$/g, 'ResponseOm')
-            }
+            file = (Classe === INPUT)
+                ? file.replace(/\$TipoOm\$/g, 'RequestOm')
+                : file.replace(/\$TipoOm\$/g, 'ResponseOm')
         } else {
             file = file.replace(/\$NomeClasse\$/g, Classe)
         }
@@ -125,9 +116,8 @@ function writeOm(args, datiInput, datiOutput) {
                     ? dettagli.import(attributo.formato)
                     : dettagli.import
 
-                if (stringaDiImport && imports.indexOf(stringaDiImport) < 0) {
+                if (stringaDiImport && imports.indexOf(stringaDiImport) < 0)
                     imports.push(stringaDiImport)
-                }
             }
         }
 
@@ -145,6 +135,20 @@ function writeOm(args, datiInput, datiOutput) {
         
         fs.writeFileSync(path, file)
     }
+
+    console.log(`
+#  '██████╗'███╗'''███╗'''''██████╗'██╗''██╗
+#  ██╔═══██╗████╗'████║''''██╔═══██╗██║'██╔╝
+#  ██║'''██║██╔████╔██║''''██║'''██║█████╔╝'
+#  ██║'''██║██║╚██╔╝██║''''██║'''██║██╔═██╗'
+#  ╚██████╔╝██║'╚═╝'██║''''╚██████╔╝██║''██╗
+#  '╚═════╝'╚═╝'''''╚═╝'''''╚═════╝'╚═╝''╚═╝
+#  '''''''''''''''''''''''''''''''''''''''''
+
+Directory di destinazione /${outputPath(nomeservizio, true)}
+`
+    )
+
 }
 
 module.exports = writeOm

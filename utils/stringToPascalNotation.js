@@ -7,5 +7,6 @@ module.exports = function(string) {
         : parole
             .map(parola => parola.toLowerCase())
             .map(parola => parola[0].toUpperCase() + parola.slice(1))
-            .join('');
+            .join('')
+
 }
