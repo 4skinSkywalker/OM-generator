@@ -37,7 +37,6 @@ module.exports = function(file) {
                 .join('.')
 
             complessita = complessita.toLowerCase()
-            formato = formato.toLowerCase()
 
             return {
                 xml,
