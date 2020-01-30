@@ -11,7 +11,7 @@ module.exports = function(file) {
     var worksheet = workbook.Sheets[firstSheet]
 
     var ordered = sheet2array(worksheet)
-        .map(([vuoto, xml, json, complessita, livello, formato, tipo, elaborazione, obbligatorio, descrizione], index) => {
+        .map(([vuoto, xml, json, complessita, livello, formato, tipo, elaborazione, obbligatorio, descrizione, mock], index) => {
 
             var posizioneExcel = index + 4
 
@@ -44,7 +44,8 @@ module.exports = function(file) {
                 complessita,
                 livello,
                 formato,
-                descrizione
+                descrizione,
+                mock
             }
         })
         .sort((a, b) => a.livello.localeCompare(b.livello))
