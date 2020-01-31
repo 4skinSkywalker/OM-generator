@@ -10,50 +10,57 @@ module.exports = function(file) {
     var firstSheet = workbook.SheetNames[0]
     var worksheet = workbook.Sheets[firstSheet]
 
-    var ordered = sheet2array(worksheet)
-        .map(([vuoto, xml, json, complessita, livello, formato, tipo, elaborazione, obbligatorio, descrizione, mock], index) => {
+    var array = sheet2array(worksheet)
+    var results = []
+    for (var index = 0; index < array.length; index++) {
 
-            var posizioneExcel = index + 4
+        var [_, xml, json, complessita, livello, formato, tipo, elaborazione, obbligatorio, descrizione, mock] = array[index]
 
-            if (!json || !complessita || !livello || !formato)
-                throw new Error(`Dati obbligatori mancanti input: riga ${posizioneExcel}`)
+        var posizioneExcel = index + 4
 
-            if (!isVariableNameValid(json))
-                throw new Error(`Nome variabile invalido "${json}" input: riga ${posizioneExcel}`)
+        if (xml && (!json && !complessita && !livello && !formato)) {
+            console.warn(`Attenzione XML presente ma JSON|complessità|livello|formato assente/i: riga ${posizioneExcel}`)
+            continue
+        }
 
-            if (!isTreePrefixValid(livello))
-                throw new Error(`Livello è invalido "${livello}" input: riga ${posizioneExcel}`)
+        if (!json || !complessita || !livello || !formato)
+            throw new Error(`Dati obbligatori mancanti input: riga ${posizioneExcel}`)
+        if (!isVariableNameValid(json))
+            throw new Error(`Nome variabile invalido "${json}" input: riga ${posizioneExcel}`)
+        if (!isTreePrefixValid(livello))
+            throw new Error(`Livello è invalido "${livello}" input: riga ${posizioneExcel}`)
 
-            descrizione = (descrizione)
-                ? descrizione
-                    .split('\n')
-                    .map((w, i) => (i === 0) ? w : ' * ' + w)
-                    .join('\n')
-                : 'TODO'
-            
-            livello = livello
-                .split('.')
-                .map(n => n.padStart(3, 0))
-                .join('.')
+        descrizione = (descrizione)
+            ? descrizione
+                .split('\n')
+                .map((w, i) => (i === 0) ? w : ' * ' + w)
+                .join('\n')
+            : 'TODO'
+        
+        livello = livello
+            .split('.')
+            .map(n => n.padStart(3, 0))
+            .join('.')
 
-            complessita = complessita.toLowerCase()
+        complessita = complessita.toLowerCase()
 
-            return {
-                xml,
-                json,
-                complessita,
-                livello,
-                formato,
-                descrizione,
-                mock
-            }
+        results.push({
+            xml,
+            json,
+            complessita,
+            livello,
+            formato,
+            descrizione,
+            mock
         })
-        .sort((a, b) => a.livello.localeCompare(b.livello))
+    }
+    
+    results.sort((a, b) => a.livello.localeCompare(b.livello))
 
     // console.log(ordered)
 
-    checkTreeCompleteness(ordered)
+    checkTreeCompleteness(results)
 
-    return ordered
+    return results
 
 }
