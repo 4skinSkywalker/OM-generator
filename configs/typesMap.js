@@ -21,7 +21,7 @@ var typesMap = {
     },
     bigdecimal: {
         nome: 'BigDecimal',
-        import: 'import java.util.BigDecimal;'
+        import: 'import java.math.BigDecimal;'
     }
 }
 
