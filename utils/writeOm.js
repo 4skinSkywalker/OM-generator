@@ -9,11 +9,11 @@ var getTypeDetails = require('./getTypeDetails')
 
 function writeOm(args, datiInput, datiOutput) {
 
-    if (!args)
-        throw new Error('Argomenti mancanti.')
-
-    if (!datiInput || (Array.isArray(datiInput) && !datiInput.length) || !datiOutput || (Array.isArray(datiOutput) && !datiOutput.length))
-        throw new Error('Dati mancanti.')
+    if (!args
+     || !datiOutput
+     || !datiInput
+     || (Array.isArray(datiOutput) && !datiOutput.length)
+     || !Array.isArray(datiInput)) throw new Error('Parametri mancanti o errati')
 
     var classi = { }
     var INPUT = '_____in_____'

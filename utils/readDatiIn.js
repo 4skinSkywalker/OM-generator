@@ -12,6 +12,10 @@ module.exports = function(file) {
 
     var array = sheet2array(worksheet)
     var results = []
+
+    // Payload di input vuoto
+    if (array.length === 1) return []
+
     for (var index = 0; index < array.length; index++) {
 
         var [_, xml, json, complessita, livello, formato, tipo, elaborazione, obbligatorio, descrizione, mock] = array[index]
